@@ -1,3 +1,4 @@
+.gitignore
 exceptionWholeWords.csv
 getReviewsFromWebOrig.py
 predictions
