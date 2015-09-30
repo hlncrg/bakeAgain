@@ -35,7 +35,7 @@ recipeNames=["double-layer-pumpkin-cheesecake"]
 
 
 for recipeId,recipeName in zip(recipeIds,recipeNames):
-    f_out = open('reviews/reviews'+recipeId+'.csv','w')#open a file to save reviews in
+    f_out = open('../data/reviews/reviews'+recipeId+'.csv','w')#open a file to save reviews in
     f_out.write('helpfulCounts,ratings,reviewText\n')#header of the file
     reviewIds=[]#store review ids
     for pagenumber in xrange(1,20):#go through a resonable range ~20

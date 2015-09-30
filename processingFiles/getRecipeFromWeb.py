@@ -19,17 +19,24 @@ def find_betweenMulti( s, first, last ):
             return stringBetween
 
 #get these recipes
-recipeIds=["17165","10497"]
-recipeNames=["big-soft-ginger-cookies","beths-spicy-oatmeal-raisin-cookies"]
+filename="../filenames.csv"#the recipe id stored in this file
+recipeIds=pandas.read_csv(filename,encoding='ISO-8859-1')['filenames'].values#load the file
 
+f_out2 = open('../data/titles.csv','w')
+f_out2.write('recipeId,title\n')#save to file
 
-for recipeId,recipeName in zip(recipeIds,recipeNames):
-    url='http://allrecipes.com/recipe/'+recipeId+'/'+recipeName+'/'
+for recipeId in recipeIds:
+    url='http://allrecipes.com/recipe/'+str(recipeId)+'/'
     print url#create the url
     r = requests.get(url)#get html
     ingredients=find_betweenMulti( r.content, 'itemprop="ingredients">', '</span>')
-    f_out = open('ingredients/ingredients'+recipeId+'.csv','w')
+    f_out = open('../data/ingredients/ingredients'+str(recipeId)+'.csv','w')
     f_out.write('ingredients\n')#save to file
     for ingredient in ingredients:
         f_out.write('"'+ingredient+'"\n')
     f_out.close()
+
+    title=find_betweenMulti(r.content,'<h1 class="recipe-summary__h1" itemprop="name">','</h1>')
+    f_out2.write(str(recipeId)+',"'+title[0]+'"\n')
+
+f_out2.close()
